@@ -146,7 +146,8 @@ STLinkInterface::STLink_GetNbDevices(TEnumStlinkInterface IfId)
         if (rc == 0) {
             if (desc.idVendor == STLINK_V3_VID &&
                 std::find(std::begin(STLINK_V3_PID), std::end(STLINK_V3_PID),
-                          desc.idProduct) != std::end(STLINK_V3_PID)) {
+                          desc.idProduct) != std::end(STLINK_V3_PID) &&
+                          FindBridgeInterface(devs[i]) >= 0) {
                 deviceCount++;
             }
         }
@@ -392,7 +393,8 @@ STLinkInterface::STLink_Reenumerate(TEnumStlinkInterface IfId,
         if (rc == 0) {
             if (desc.idVendor == STLINK_V3_VID &&
                 std::find(std::begin(STLINK_V3_PID), std::end(STLINK_V3_PID),
-                          desc.idProduct) != std::end(STLINK_V3_PID)) {
+                          desc.idProduct) != std::end(STLINK_V3_PID) &&
+                          FindBridgeInterface(devs[i]) >= 0) {
                 devices[deviceCount] = devs[i];
                 libusb_ref_device(devs[i]);
                 deviceCount++;
